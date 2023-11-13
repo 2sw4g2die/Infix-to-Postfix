@@ -1,64 +1,65 @@
 /*
-* lqueue.hpp
+* lstack.hpp
 * Written by : Lana Cossettini (c3436542)
 * Modified : 09/09/2023
 *
-* This class represents a templated Queue using a linked list as the underlying collection.
+* This class represents a templated Stack using a linked list as the underlying collection.
 * This file should be used in conjunction with Assignment 2 for SENG1120.
 */
 
 template <typename T>
-LQueue<T>::LQueue()
+LStack<T>::LStack()
 {
     list = new std::list<T>();
     count = 0;
 }
 
 template <typename T>
-LQueue<T>::~LQueue()
+LStack<T>::~LStack() 
 {
     delete list;
     count = 0;
 }
 
 template <typename T>
-void LQueue<T>::enqueue(const T& data) 
+void LStack<T>::push(const T& data) 
 {
-    list->push_back(data); // add to back of queue
-    count++;
+    // Insert at the top
+    list->push_front(data);
+    count++; 
 }
 
 template <typename T>
-T LQueue<T>::dequeue() 
+T LStack<T>::pop() 
 {
-    if(empty()) {
+    if (empty()) {
         throw empty_collection_exception();
     }
-    T data = list->front(); // Get data from front
-    list->pop_front(); // Remove front
+     T data = list->front();// get data from front
+    list->pop_front(); //remove front
     count--;
     return data;
 }
 
 template <typename T>
-T& LQueue<T>::front() 
+T& LStack<T>::top()
 {
     if(empty()) {
         throw empty_collection_exception();
     }
-    return list->front(); // return reference to front element of queue
+    return list->front(); // return reference to top element
 }
 
 template <typename T>
-int LQueue<T>::size() const
+int LStack<T>::size() const
 {
     return count;
 }
 
 template <typename T>
-bool LQueue<T>::empty() const
+bool LStack<T>::empty() const
 {
-    //checks if queue is empty
+    //checks if stack is empty
     if (count <= 0) 
         return true;
     else 
